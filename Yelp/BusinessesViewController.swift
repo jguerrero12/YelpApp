@@ -12,11 +12,14 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
  UIScrollViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
+    var loadingMoreView:InfiniteScrollActivityView?
     
     var isMoreDataLoading = false
-    var businesses: [Business]!
-    var filteredData: [Business]!
+    var offset = 0
+    var businesses = [Business]()
+    var filteredData = [Business]()
     var searchController: UISearchController!
+    var numOfResults: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,20 +46,18 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
         // Sets this view controller as presenting view controller for the search interface
         definesPresentationContext = true
         
-        Business.searchWithTerm(term: "Thai", completion: { (businesses: [Business]?, error: Error?) -> Void in
-            
-            self.businesses = businesses
-            if let businesses = businesses {
-                for business in businesses {
-                    print(business.name!)
-                    print(business.address!)
-                }
-            }
-            self.filteredData = businesses
-            self.tableView.reloadData()
-            
-            }
-        )
+        // Set up infinite scroll loading indicator to table view
+        let frame = CGRect(x: 0, y: tableView.contentSize.height, width: tableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
+        loadingMoreView = InfiniteScrollActivityView(frame: frame)
+        loadingMoreView!.isHidden = true
+        tableView.addSubview(loadingMoreView!)
+        
+        var insets = tableView.contentInset
+        insets.bottom += InfiniteScrollActivityView.defaultHeight
+        tableView.contentInset = insets
+        
+        // Load the table with initial data
+        loadMoreData()
         
         /* Example of Yelp search with more search options specified
          Business.searchWithTerm("Restaurants", sort: .Distance, categories: ["asianfusion", "burgers"], deals: true) { (businesses: [Business]!, error: NSError!) -> Void in
@@ -79,18 +80,13 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if filteredData != nil {
-            return filteredData!.count
-        }
-        else{
-            return 0
-        }
+        return filteredData.count
     }
     
     func updateSearchResults(for: UISearchController) {
         if let searchText = searchController.searchBar.text {
             filteredData = searchText.isEmpty ? businesses : businesses.filter({(aBusiness: Business) -> Bool in
-                // If dataItem matches the searchText, return true to include it
+                // If a business's name in businesses contains the searchText, return true to include it
                 let title = aBusiness.name
                 return title!.range(of: searchText, options: .caseInsensitive) != nil
             })
@@ -100,6 +96,37 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func loadMoreData() {
         
+        if (numOfResults==nil || offset < numOfResults!) {
+            Business.searchWithTerm(term: "Thai", offset: offset, sort: nil, categories: nil, deals: nil, completion: { (newBusinesses: [Business]?, total:Int?, error: Error?) -> Void in
+                
+                self.numOfResults = total
+                for business in newBusinesses! {
+                    self.businesses.append(business)
+                }
+                self.filteredData = self.businesses
+                self.offset = self.businesses.count
+                DispatchQueue.main.async {self.tableView.reloadData()
+                    // Stop the loading indicator
+                    self.loadingMoreView!.stopAnimating()
+                    // Update flag
+                    self.isMoreDataLoading = false
+                }
+            })
+            
+            
+        }
+        else{
+            // Avoid extra space at bottom of tableview after infinite scroll has reached end of list.
+            var insets = tableView.contentInset
+            insets.bottom = 0.0
+            tableView.contentInset = insets
+            
+            // Update flag
+            self.isMoreDataLoading = false
+            
+            // Stop the loading indicator
+            self.loadingMoreView!.stopAnimating()
+        }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -112,6 +139,11 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
             // When the user has scrolled past the threshold, start requesting
             if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.isDragging) {
                 isMoreDataLoading = true
+                
+                // Update position of loadingMoreView, and start loading indicator
+                let frame = CGRect(x: 0, y: tableView.contentSize.height, width: tableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
+                loadingMoreView?.frame = frame
+                loadingMoreView!.startAnimating()
                 
                 // load more data
                 loadMoreData()

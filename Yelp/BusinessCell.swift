@@ -21,13 +21,17 @@ class BusinessCell: UITableViewCell {
     var business: Business! {
         didSet {
             nameLabel.text = business.name
+            if business.imageURL != nil{
             thumbImageView.setImageWith(business.imageURL!)
+            }
+            else{
+                thumbImageView.image = UIImage(named: "1487327206_City_86.png")
+            }
             categoriesLabel.text = business.categories
             addressLabel.text = business.address
             reviewsCountLabel.text = "\(business.reviewCount!) Reviews"
             ratingImageView.setImageWith(business.ratingImageURL!)
             distanceLabel.text = business.distance
-            print(business.imageURL!)
         }
     }
     

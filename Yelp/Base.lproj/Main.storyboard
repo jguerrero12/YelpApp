@@ -93,7 +93,7 @@
                                                 <constraint firstItem="9Fg-aY-8wS" firstAttribute="leading" secondItem="iKR-DE-T3u" secondAttribute="leading" constant="8" id="ED7-Ur-g9M"/>
                                                 <constraint firstItem="fsd-I4-KU2" firstAttribute="leading" secondItem="9Fg-aY-8wS" secondAttribute="trailing" constant="8" id="KfJ-JP-aRi"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="KaN-ep-4iS" secondAttribute="trailing" constant="8" id="Onw-KH-521"/>
-                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="9Fg-aY-8wS" secondAttribute="bottom" constant="8" id="Swq-4x-ZOB"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="9Fg-aY-8wS" secondAttribute="bottom" constant="7" id="Swq-4x-ZOB"/>
                                                 <constraint firstAttribute="trailing" secondItem="p1a-d8-aum" secondAttribute="trailing" constant="8" id="Y7C-kN-wnp"/>
                                                 <constraint firstItem="xAK-X4-iIN" firstAttribute="leading" secondItem="REb-bM-xHg" secondAttribute="trailing" constant="8" id="bYJ-3B-h5f"/>
                                                 <constraint firstItem="p1a-d8-aum" firstAttribute="leading" secondItem="9Fg-aY-8wS" secondAttribute="trailing" constant="8" id="bwf-8f-y1a"/>
@@ -106,6 +106,7 @@
                                                 <constraint firstItem="REb-bM-xHg" firstAttribute="top" secondItem="fsd-I4-KU2" secondAttribute="bottom" constant="3" id="mJ7-Qy-8a9"/>
                                                 <constraint firstItem="fsd-I4-KU2" firstAttribute="top" secondItem="iKR-DE-T3u" secondAttribute="top" constant="8" id="mP5-qa-3Dl"/>
                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="KaN-ep-4iS" secondAttribute="bottom" constant="8" id="tz3-n9-fzV"/>
+                                                <constraint firstItem="p1a-d8-aum" firstAttribute="top" secondItem="REb-bM-xHg" secondAttribute="bottom" constant="3.5" id="wW2-Gb-sDX"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -116,6 +117,7 @@
                                             <outlet property="ratingImageView" destination="REb-bM-xHg" id="I28-L1-8Mx"/>
                                             <outlet property="reviewsCountLabel" destination="xAK-X4-iIN" id="FHN-qR-BJ3"/>
                                             <outlet property="thumbImageView" destination="9Fg-aY-8wS" id="IPR-Fn-TD5"/>
+                                            <segue destination="9Zc-Ax-cIJ" kind="show" id="aXu-Rl-CMb"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -123,14 +125,42 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
-                    <navigationItem key="navigationItem" id="AVx-XE-Jjr"/>
+                    <navigationItem key="navigationItem" id="AVx-XE-Jjr">
+                        <barButtonItem key="rightBarButtonItem" title="Map" width="40" style="done" id="Mlk-Sv-eEH">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="jrQ-ad-9xk">
+                                <rect key="frame" x="269" y="7" width="35" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Map">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="m86-rW-ALw" id="OtR-vw-2dP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fgb-4b-F1b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2784.375" y="357.04225352112678"/>
+            <point key="canvasLocation" x="2219" y="357"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="225-kp-NgT">
+            <objects>
+                <viewController id="9Zc-Ax-cIJ" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="9MX-pu-QEP"/>
+                        <viewControllerLayoutGuide type="bottom" id="Wdi-6g-9Hi"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="1Y9-ZR-ugY">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Sm2-BE-5x0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3114" y="356"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ry7-1V-CTt">
@@ -149,7 +179,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sqQ-JM-9xk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1786.875" y="357.04225352112678"/>
+            <point key="canvasLocation" x="1466" y="356"/>
         </scene>
     </scenes>
 </document>
