@@ -9,7 +9,7 @@
 import UIKit
 
 class BusinessesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating,
- UIScrollViewDelegate {
+UIScrollViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     var loadingMoreView:InfiniteScrollActivityView?
@@ -88,7 +88,7 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
             filteredData = searchText.isEmpty ? businesses : businesses.filter({(aBusiness: Business) -> Bool in
                 // If a business's name in businesses contains the searchText, return true to include it
                 let title = aBusiness.name
-                return title!.range(of: searchText, options: .caseInsensitive) != nil
+                return title.range(of: searchText, options: .caseInsensitive) != nil
             })
             tableView.reloadData()
         }
@@ -157,14 +157,15 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
         // Dispose of any resources that can be recreated.
     }
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let cell = sender as! BusinessCell
+        let indexPath = tableView.indexPath(for: cell)
+        let business = filteredData[(indexPath?.row)!]
+        let detailViewController = segue.destination as! DetailViewController
+        detailViewController.business = business
+        
+    }
+    
     
 }

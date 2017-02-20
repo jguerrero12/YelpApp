@@ -9,16 +9,19 @@
 import UIKit
 
 class Business: NSObject {
-    let name: String?
+    let name: String
     let address: String?
     let imageURL: URL?
     let categories: String?
     let distance: String?
     let ratingImageURL: URL?
     let reviewCount: NSNumber?
+    let url: String?
+    let snippet: String?
+    let phone: String?
     
     init(dictionary: NSDictionary) {
-        name = dictionary["name"] as? String
+        name = (dictionary["name"] as? String)!
         
         let imageURLString = dictionary["image_url"] as? String
         if imageURLString != nil {
@@ -26,6 +29,10 @@ class Business: NSObject {
         } else {
             imageURL = nil
         }
+        
+        url = dictionary["mobile_url"] as? String
+        snippet = dictionary["snippet_text"] as? String
+        phone = dictionary["display_phone"] as? String
         
         let location = dictionary["location"] as? NSDictionary
         var address = ""
