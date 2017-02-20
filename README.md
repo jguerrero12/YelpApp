@@ -2,7 +2,7 @@
 
 Yelp (Demo) is a Yelp search app using the [Yelp API](http://www.yelp.com/developers/documentation/v2/search_api).
 
-Time spent: 7 hours spent in total
+Time spent: 11.5 hours spent in total
 
 ## User Stories
 
@@ -21,24 +21,27 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-- [ ] App icon and lunchscreen
+- [x] App icon and lunchscreen
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1. 
-2. 
+1. discuss further how to configure the map functionality
+2. discuss about issues I was finding with optional values
 
 ## Video Walkthrough 
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://github.com/jguerrero12/YelpApp/blob/master/yelpDemo.gif?raw=true' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+Challenges:
+
+- Certain variables for text in labels would cause the app to crash because of unwapping of nil values-- while there was indeed a value while debugging
+- autolayout for labels, images, etc, in scroll view for detail page would give incorrect results and errors all about!
 
 ## License
 
